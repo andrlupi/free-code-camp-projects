@@ -1,0 +1,59 @@
+def arithmetic_arranger(problems, show_answers=False):
+    lines=['','','','']
+    if len(problems)>5:
+        arranged_math = 'Error: Too many problems.'
+        return arranged_math
+    for problem in problems:
+        parts = problem.split(' ')
+        if not parts[0].isdigit() or not parts[2].isdigit():
+            arranged_math = 'Error: Numbers must only contain digits.'
+            return arranged_math
+        if parts[1].find('+') == -1 and parts[1].find('-') == -1:
+            arranged_math = "Error: Operator must be '+' or '-'."
+            return arranged_math
+        parts  = problem.split(' ')
+        if len(parts[0])>4 or len(parts[2])>4:
+            arranged_math = 'Error: Numbers cannot be more than four digits.'
+            return arranged_math
+        if parts[1] == '+':
+            math = str( int( parts[0] ) + int( parts[2] ) )
+        else:
+            math = str( int( parts[0] ) - int( parts[2] ) )
+        
+        len_first  = len(parts[0])
+
+        len_second = len(parts[2])
+
+        len_math = len(math)
+        
+
+        size = len(parts[1] + ' ' + '-' * (max(len_first,len_second) ))
+
+        lines[0] += ' ' * (size - len( parts[0] ) ) + parts[0]+ 4*' '
+        
+        lines[1] += parts[1] + ' ' * (size - len(parts[2])-1) + parts[2]+ 4*' '
+
+        lines[2] +=  '-' * (size)+ 4*' '
+
+        lines[3] +=  ' '*(size-len(math))+   math + 4*' '
+
+    for i in range(3 + int(show_answers)):
+        lines[i] = lines[i].rstrip(' ')
+
+    
+    arranged_math =  "\n".join(lines[i] for i in range(3 + int(show_answers)))
+
+    return arranged_math
+
+
+
+
+
+
+
+
+my4 = arithmetic_arranger(["11 + 4", "3801 - 2999", "1 + 2", "123 + 49", "1 - 9380"])
+my10 = arithmetic_arranger(["32 - 698", "1 - 3801", "45 + 43", "123 + 49", "988 + 40"], True)
+
+
+print(my10)
